@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Chat App</title>
+</head>
+<body>
+	<div>Chat App</div>
+
+	<div style="display: flex; flex-direction: column; margin-top: 20px;">
+		<label for="message">message</label>
+		<textarea name="message" id="message" cols="30" rows="10" placeholder="Type you message..."></textarea>
+	</div>
+
+	<div><button id="btnSend" style="margin-top: 10px;">Send</button></div>
+	<div><button id="btnSendLocation" style="margin-top: 10px;">Send Location</button></div>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/js/chat.js"></script>
+</body>
+</html>
