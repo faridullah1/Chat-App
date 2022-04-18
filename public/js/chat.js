@@ -19,6 +19,11 @@ socket.on('message', (message) => {
 	$messages.insertAdjacentHTML('beforeend', html);
 });
 
+document.querySelector('#message-form').addEventListener('submit', () => {
+	e.preventDefault();
+	sendMessage();
+})
+
 socket.on('locationMessage', (location) => {
 	console.log('location =', location);
 	const html = Mustache.render(locationTemplate, {
@@ -30,19 +35,7 @@ socket.on('locationMessage', (location) => {
 
 // Click event listeners;
 $sendBtn.addEventListener('click', () => {
-	$sendBtn.setAttribute('disabled', 'disabled');
-
-	const message = $messageField.value;
-
-	socket.emit('sendMessage', message, (error) => {
-		$sendBtn.removeAttribute('disabled');
-		$messageField.value = '';
-		$messageField.focus();
-
-		if (error) return console.error(error);
-
-		console.log('Message Delivered!')
-	});
+	sendMessage();
 });
 
 $sendLocationBtn.addEventListener('click', () => {
@@ -63,3 +56,19 @@ $sendLocationBtn.addEventListener('click', () => {
 		});
 	});
 });
+
+function sendMessage() {
+	$sendBtn.setAttribute('disabled', 'disabled');
+
+	const message = $messageField.value;
+
+	socket.emit('sendMessage', message, (error) => {
+		$sendBtn.removeAttribute('disabled');
+		$messageField.value = '';
+		$messageField.focus();
+
+		if (error) return console.error(error);
+
+		console.log('Message Delivered!')
+	});
+}
