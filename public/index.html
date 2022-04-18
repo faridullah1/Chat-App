@@ -9,14 +9,33 @@
 <body>
 	<div>Chat App</div>
 
+	<div id="messages"></div>
+
 	<div style="display: flex; flex-direction: column; margin-top: 20px;">
-		<label for="message">message</label>
-		<textarea name="message" id="message" cols="30" rows="10" placeholder="Type you message..."></textarea>
+		<label for="messageField">message</label>
+		<textarea name="message" id="messageField" cols="30" rows="10" placeholder="Type you message..."></textarea>
 	</div>
 
 	<div><button id="btnSend" style="margin-top: 10px;">Send</button></div>
 	<div><button id="btnSendLocation" style="margin-top: 10px;">Send Location</button></div>
 
+	<script id="messageTemplate" type="text/html">
+		<div>
+			<p>{{createdAt}} - {{message}}</p>
+		</div>
+	</script>
+
+	<script id="locationTemplate" type="text/html">
+		<div>
+			<p>
+				{{ createdAt }} -
+				<a href="{{url}}" target="_blank">My current location</a>
+			</p>
+		</div>
+	</script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/js/chat.js"></script>
 </body>
