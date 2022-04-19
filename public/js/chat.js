@@ -5,10 +5,12 @@ const $sendBtn = document.querySelector('#btnSend');
 const $sendLocationBtn = document.querySelector('#btnSendLocation');
 const $messageField = document.querySelector('#messageField');
 const $messages = document.querySelector('#messages');
+const $sidebar = document.querySelector('#sidebar');
 
 // Templates
 const messageTemplate = document.querySelector('#messageTemplate').innerHTML;
 const locationTemplate = document.querySelector('#locationTemplate').innerHTML;
+const sidebarTemplate = document.querySelector('#sidebarTemplate').innerHTML;
 
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true });
@@ -23,11 +25,6 @@ socket.on('message', (message) => {
 	$messages.insertAdjacentHTML('beforeend', html);
 });
 
-document.querySelector('#message-form').addEventListener('submit', () => {
-	e.preventDefault();
-	sendMessage();
-})
-
 socket.on('locationMessage', (location) => {
 	console.log('location =', location);
 	const html = Mustache.render(locationTemplate, {
@@ -36,9 +33,23 @@ socket.on('locationMessage', (location) => {
 		createdAt: moment(location.createdAt).format('h:mm a')
 	});
 	$messages.insertAdjacentHTML('beforeend', html);
-})
+});
+
+socket.on('roomData', ({ room, users }) => {
+	const html = Mustache.render(sidebarTemplate, {
+		room,
+		users
+	});
+
+	$sidebar.innerHTML = html;
+});
 
 // Click event listeners;
+document.querySelector('#message-form').addEventListener('submit', () => {
+	e.preventDefault();
+	sendMessage();
+});
+
 $sendBtn.addEventListener('click', () => {
 	sendMessage();
 });
